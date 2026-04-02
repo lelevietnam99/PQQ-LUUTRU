@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PQQ Lưu Trữ</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f0f2f5;
+            color: #333;
+        }
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+        h1 {
+            text-align: center;
+            color: #1a365d;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .search-container {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 20px;
+        }
+        .search-container input {
+            padding: 12px 20px;
+            width: 100%;
+            max-width: 400px;
+            border: 1px solid #cbd5e0;
+            border-radius: 6px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+        .search-container input:focus {
+            outline: none;
+            border-color: #3182ce;
+            box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.2);
+        }
+        .table-responsive {
+            overflow-x: auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #fff;
+        }
+        th, td {
+            padding: 15px;
+            border-bottom: 1px solid #e2e8f0;
+            text-align: left;
+            line-height: 1.5;
+        }
+        th {
+            background-color: #2b6cb0;
+            color: #ffffff;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+        tr:hover {
+            background-color: #edf2f7;
+        }
+        td.stt {
+            text-align: center;
+            font-weight: bold;
+            color: #4a5568;
+        }
+        a.download-link, a.external-link {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: background-color 0.2s;
+        }
+        a.download-link {
+            background-color: #edf2f7;
+            color: #2d3748;
+            border: 1px solid #cbd5e0;
+        }
+        a.download-link:hover {
+            background-color: #e2e8f0;
+        }
+        a.external-link {
+            color: #3182ce;
+        }
+        a.external-link:hover {
+            text-decoration: underline;
+            color: #2b6cb0;
+        }
+        /* Style cho trường hợp không tìm thấy kết quả */
+        .no-results {
+            text-align: center;
+            padding: 20px;
+            color: #718096;
+            font-style: italic;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>PQQ Lưu Trữ</h1>
+
+    <div class="search-container">
+        <input type="text" id="searchInput" onkeyup="searchTable()" placeholder="🔍 Nhập nội dung cần tìm kiếm...">
+    </div>
+
+    <div class="table-responsive">
+        <table id="dataTable">
+            <thead>
+                <tr>
+                    <th style="width: 5%;">STT</th>
+                    <th style="width: 45%;">Nội dung</th>
+                    <th style="width: 20%;">File đính kèm</th>
+                    <th style="width: 30%;">Đường Link đính kèm</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="stt">1</td>
+                    <td>ẢNH TỔ NGÀI LA HẦU LA TÔN GIẢ THÁI TỔ SƯ</td>
+                    <td><a href="ẢNH TỔ NGÀI LA HẦU LA TÔN GIẢ THÁI TỔ SƯ.jfif" class="download-link" download>📄 Tải Ảnh</a></td>
+                    <td><a href="#" class="external-link" target="_blank">🔗 Mở trên Google Drive</a></td>
+                </tr>
+                <tr>
+                    <td class="stt">2</td>
+                    <td>Kịch bản MC -Thi Thăng Đai Võ Đường Trí Vũ - Ngày 20/02/2026</td>
+                    <td><a href="MC 20-02-2026.docx" class="download-link" download>📊 Tải Checklist</a></td>
+                    <td><a href="#" class="external-link" target="_blank">🔗 Mở trên Google Drive</a></td>
+                </tr>
+                </tbody>
+        </table>
+        <div id="noResults" class="no-results">Không tìm thấy nội dung phù hợp.</div>
+    </div>
+</div>
+
+<script>
+    function searchTable() {
+        let input = document.getElementById("searchInput");
+        let filter = input.value.toLowerCase();
+        let table = document.getElementById("dataTable");
+        let tr = table.getElementsByTagName("tr");
+        let noResultsMsg = document.getElementById("noResults");
+        let hasVisibleRow = false;
+
+        // Bắt đầu lặp từ 1 để bỏ qua hàng tiêu đề (th)
+        for (let i = 1; i < tr.length; i++) {
+            // Lấy ô "Nội dung" (cột thứ 2, index là 1)
+            let td = tr[i].getElementsByTagName("td")[1];
+            
+            if (td) {
+                let txtValue = td.textContent || td.innerText;
+                // Nếu tìm thấy chữ khớp với nội dung tìm kiếm
+                if (txtValue.toLowerCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                    hasVisibleRow = true;
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }       
+        }
+
+        // Hiển thị thông báo nếu không có kết quả nào
+        if (!hasVisibleRow && tr.length > 1) {
+            noResultsMsg.style.display = "block";
+            table.style.display = "none";
+        } else {
+            noResultsMsg.style.display = "none";
+            table.style.display = "table";
+        }
+    }
+</script>
+
+</body>
+</html>
